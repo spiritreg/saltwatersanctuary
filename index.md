@@ -1,3 +1,5 @@
+# Saltwater Santuary
+
 ### Your Gulf Shores Beach Guide
 
 Welcome to **Colonnades 1403**, your luxurious home away from home in Gulf Shores, Alabama! We are thrilled to host you and hope you enjoy the panoramic views and exceptional amenities of this beachfront condo.
