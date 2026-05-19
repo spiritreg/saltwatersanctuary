@@ -1,3 +1,11 @@
 title: Saltwater Sanctuary
-description: A Jekyll site for Saltwater Sanctuary
+description: Your Gulf Shores Beach Guide — Colonnades 1403
 theme: minima
+
+# Optional: override the minima skin
+minima:
+  skin: classic
+
+plugins:
+  - jekyll-feed
+
