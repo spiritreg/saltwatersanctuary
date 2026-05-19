@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Saltwater Sanctuary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sidebar-width: 270px;
+      --sidebar-bg: #1a2c3a;
+      --sidebar-text: #DDC097;
+      --accent: #DDC097;
+      --body-bg: #f5f2ec;
+      --body-text: #2c2c2c;
+      --heading-color: #1a2c3a;
+      --link-color: #1a6e8e;
+      --border: #d4cfc8;
+      --table-head-bg: #1a2c3a;
+      --table-head-text: #DDC097;
+      --table-alt: #ede9e2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--body-bg);
+      color: var(--body-text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── HAMBURGER BUTTON ── */
+    #hamburger {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 300;
+      background: var(--sidebar-bg);
+      border: none;
+      border-radius: 6px;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px;
+    }
+    #hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    #hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #hamburger.open span:nth-child(2) { opacity: 0; }
+    #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── OVERLAY ── */
+    #overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 150;
+    }
+    #overlay.active { display: block; }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 32px 20px 32px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 200;
+      transition: transform 0.3s ease;
+    }
+    #sidebar .sidebar-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    #sidebar .sidebar-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 28px;
+      color: var(--sidebar-text);
+    }
+    #sidebar nav { list-style: none; }
+    #sidebar nav li { margin-bottom: 2px; }
+    #sidebar nav a {
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      display: block;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.2s, opacity 0.2s;
+      opacity: 0.85;
+    }
+    #sidebar nav a:hover {
+      background: rgba(221,192,151,0.12);
+      opacity: 1;
+    }
+    #sidebar nav .nav-section {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.55;
+      margin: 18px 0 6px 10px;
+    }
+
+    /* ── MAIN CONTENT ── */
+    #main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 52px 56px 80px 56px;
+      max-width: 860px;
+    }
+
+    /* Page title (shown once, only in main) */
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--heading-color);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .page-subtitle {
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8a9da8;
+      margin-bottom: 36px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: var(--heading-color);
+      margin: 48px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--heading-color);
+      margin: 28px 0 10px;
+    }
+    p { line-height: 1.75; margin-bottom: 14px; font-size: 0.95rem; }
+
+    ul, ol {
+      padding-left: 1.4em;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+    li { margin-bottom: 4px; }
+
+    a { color: var(--link-color); }
+
+    strong { font-weight: 600; }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 22px;
+      font-size: 0.9rem;
+    }
+    thead th {
+      background: var(--table-head-bg);
+      color: var(--table-head-text);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    tbody tr:nth-child(even) { background: var(--table-alt); }
+    tbody td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    /* Restaurant cards */
+    .restaurant {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .restaurant strong { font-size: 1rem; }
+    .restaurant .address { font-size: 0.85rem; color: #666; margin-top: 4px; }
+    .restaurant a { font-size: 0.85rem; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      #hamburger { display: flex; }
+
+      #sidebar {
+        transform: translateX(-100%);
+      }
+      #sidebar.open {
+        transform: translateX(0);
+      }
+
+      #main {
+        margin-left: 0;
+        padding: 70px 22px 60px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hamburger Button (mobile only) -->
+<button id="hamburger" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Overlay (mobile) -->
+<div id="overlay"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="sidebar-logo">Saltwater Sanctuary</div>
+  <div class="sidebar-sub">Gulf Shores Beach Guide</div>
+  <nav>
+    <ul>
+      <li><span class="nav-section">The Property</span></li>
+      <li><a href="#overview">Property Overview</a></li>
+      <li><a href="#bedding">Bedding Configuration</a></li>
+      <li><a href="#arrival">Arrival &amp; Departure</a></li>
+      <li><span class="nav-section">Amenities</span></li>
+      <li><a href="#condo-amenities">Condo Amenities</a></li>
+      <li><a href="#resort-amenities">Resort Amenities</a></li>
+      <li><span class="nav-section">Policies</span></li>
+      <li><a href="#rules">Important Rules &amp; Policies</a></li>
+      <li><a href="#beach">Beach &amp; Wildlife Rules</a></li>
+      <li><a href="#supplies">Supplies</a></li>
+      <li><span class="nav-section">Info</span></li>
+      <li><a href="#emergency">Emergency &amp; Contact</a></li>
+      <li><a href="#local">Local Area</a></li>
+      <li><a href="#restaurants">Favorite Restaurants</a></li>
+      <li><a href="#troubleshooting">Troubleshooting</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main id="main">
+
+  <h1 class="page-title">Saltwater Sanctuary</h1>
+  <p class="page-subtitle">Your Gulf Shores Beach Guide</p>
+
+  <p>Welcome to <strong>Colonnades 1403</strong>, your luxurious home away from home in Gulf Shores, Alabama! We are thrilled to host you and hope you enjoy the panoramic views and exceptional amenities of this beachfront condo.</p>
+
+  <hr>
+
+  <h2 id="overview">Property Overview</h2>
+  <table>
+    <thead><tr><th>Detail</th><th>Information</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Property Name</strong></td><td>The Colonnades 1403</td></tr>
+      <tr><td><strong>Address</strong></td><td>527 East Beach Blvd, Gulf Shores, AL 36542</td></tr>
+      <tr><td><strong>Size</strong></td><td>4 Bedrooms, 4 Bathrooms, over 2,100 sq. ft.</td></tr>
+      <tr><td><strong>Location</strong></td><td>Direct beachfront — west corner condo</td></tr>
+      <tr><td><strong>Design</strong></td><td>Newly decorated modern design</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Key Highlights:</strong> Floor-to-ceiling windows showcasing the Gulf, a custom bunk room, a gourmet kitchen with stainless steel appliances, and a wet bar featuring a 100 lb. ice maker.</p>
+
+  <hr>
+
+  <h2 id="bedding">Bedding Configuration</h2>
+  <table>
+    <thead><tr><th>Location</th><th>Bed Size</th><th>Key Features</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Primary Bedroom</strong></td><td>King</td><td>Gulf-front, balcony access, large closet, double vanity, jetted tub, custom walk-in shower</td></tr>
+      <tr><td><strong>Guest Bedroom 1</strong></td><td>Two sets of Twin over Queen Bunk Beds</td><td>Custom Bunk Room, private bathroom</td></tr>
+      <tr><td><strong>Guest Bedroom 2</strong></td><td>King</td><td>North balcony access, private bathroom</td></tr>
+      <tr><td><strong>Guest Bedroom 3</strong></td><td>King</td><td>North balcony access, large closet, bathroom</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2 id="arrival">Arrival &amp; Departure</h2>
+  <table>
+    <thead><tr><th>Detail</th><th>Information</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Check-in Time</strong></td><td>4:00 PM CT</td></tr>
+      <tr><td><strong>Check-out Time</strong></td><td>10:00 AM</td></tr>
+      <tr><td><strong>Door Access</strong></td><td>Your unique door code will be provided by 4:00 PM CT on the day of check-in via email and text.</td></tr>
+      <tr><td><strong>Parking</strong></td><td>Two (2) Parking Passes are included with your reservation.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Departure Instructions</h3>
+  <p>Please help us prepare for the next guest:</p>
+  <ul>
+    <li>Load and run the dishwasher (try not to leave dirty dishes in the sink).</li>
+    <li>Remove all perishable food from the kitchen.</li>
+    <li>Remove all trash from the unit and place it in the outside receptacles or garbage chutes.</li>
+    <li>You do <strong>not</strong> need to strip the beds; used beds may be left unmade.</li>
+    <li>Bath towels may be left in or near the tub in the bathrooms.</li>
+    <li>Lock the door.</li>
+  </ul>
+
+  <hr>
+
+  <h2 id="condo-amenities">Condo Amenities</h2>
+  <h3>1. Kitchen Essentials</h3>
+  <p>The gourmet kitchen is fully stocked with essentials, including a coffee maker (both K-cup and 12-cup), toaster, blender, and crockpot.</p>
+  <h3>2. Wet Bar</h3>
+  <p>The wet bar includes a sink and a <strong>100 lb. ice maker</strong> for effortless entertaining.</p>
+  <h3>3. Internet / WiFi</h3>
+  <p>Complimentary WiFi is provided. <strong>The password is located on the fridge.</strong></p>
+
+  <h2 id="resort-amenities">Resort Amenities</h2>
+  <p>As a guest in our low-density complex, you have access to:</p>
+  <ul>
+    <li>Pool &amp; Hot Tub</li>
+    <li>Fitness Center</li>
+    <li>Sauna — located in Men's and Women's restrooms on the 2nd floor</li>
+    <li>Charcoal &amp; Gas Grills — located in the common area at the rear of parking</li>
+    <li>Direct Beach Access via the boardwalk</li>
+    <li>Trash Chute on Every Floor</li>
+  </ul>
+
+  <hr>
+
+  <h2 id="rules">Important Rules &amp; Policies</h2>
+
+  <h3>No Smoking or Vaping</h3>
+  <p>Smoking and vaping are strictly prohibited in the unit or on the balcony. A minimum <strong>$500 fine</strong> may be incurred for violations.</p>
+
+  <h3>Air Conditioning</h3>
+  <p>Do <strong>not</strong> leave sliding glass doors or windows open while the A/C is running. This can cause the unit to freeze up, and guests are responsible for any resulting service fees.</p>
+
+  <h3>Quiet Hours</h3>
+  <p>Please observe quiet hours between <strong>10:00 PM and 8:00 AM</strong>.</p>
+
+  <h3>Wet Clothing</h3>
+  <p>Out of courtesy to the owners, please do not sit on furniture with wet clothing, as chlorine and salt can bleach the fabric.</p>
+
+  <h3>Towels</h3>
+  <p>Do not use unit linens for the pool or beach. Please do not hang towels or clothing from the balcony.</p>
+
+  <hr>
+
+  <h2 id="beach">Beach &amp; Wildlife Rules</h2>
+
+  <h3>Sand Removal</h3>
+  <p>Please rinse off as much sand as possible from your feet, clothes, and beach items before entering the building.</p>
+
+  <h3>Beach Items</h3>
+  <p>All items (tents, chairs, umbrellas, toys) must be <strong>removed from the beach every night before sunset</strong>.</p>
+
+  <h3>Sea Turtle Season</h3>
+  <p>During sea turtle nesting season (<strong>May 1 through October 31</strong>), please close window treatments and turn down lighting after dark/at sunset to avoid disorienting the baby turtles.</p>
+
+  <hr>
+
+  <h2 id="supplies">Supplies</h2>
+  <p>We provide a <strong>starter set</strong> of essentials designed to cover your first night's needs:</p>
+  <ul>
+    <li><strong>In Bathrooms:</strong> Bath soap, shampoo, conditioner, body lotion, and one roll of toilet paper per bathroom.</li>
+    <li><strong>In Kitchen:</strong> Paper towels, laundry detergent (for units with washer/dryer), dishwasher detergent, dish soap, and trash bags.</li>
+  </ul>
+  <p>Please plan to bring or purchase additional supplies for the duration of your stay. Daily housekeeping or restocking is not provided.</p>
+
+  <hr>
+
+  <h2 id="emergency">Emergency &amp; Contact Information</h2>
+  <table>
+    <thead><tr><th>Type</th><th>Contact / Action</th><th>Phone</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Non-Emergency / General Questions / Maintenance</td>
+        <td>Call the office for assistance during your stay</td>
+        <td><a href="tel:2512023211">(251) 202-3211</a></td>
+      </tr>
+      <tr>
+        <td>Urgent Maintenance / Cleaning Issues (upon check-in)</td>
+        <td>Contact the office immediately. Cleaning issues must be reported within 12–18 hours of check-in.</td>
+        <td><a href="tel:2512023211">(251) 202-3211</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2 id="local">Local Area</h2>
+  <p>Colonnades 1403 is in a prime, walkable Gulf Shores location, steps away from:</p>
+  <ul>
+    <li>Sea-N-Suds Restaurant</li>
+    <li>The Hangout</li>
+    <li>Pink Pony Pub</li>
+    <li>Waffle House</li>
+    <li>Surf Style</li>
+    <li>Gulf State Fishing Pier</li>
+  </ul>
+
+  <hr>
+
+  <h2 id="restaurants">Favorite Restaurants</h2>
+
+  <h3>Breakfast</h3>
+  <div class="restaurant">
+    <strong>Duck's Diner</strong>
+    <div class="address">120 E Fort Morgan Rd, Gulf Shores, AL 36542 — <a href="tel:2514840055">(251) 484-0055</a></div>
+    <a href="https://www.google.com/maps/place/ducks+diner+gulf+shores+al/data=!4m2!3m1!1s0x889a0559a360d047:0x687794ed3ddad155">View on Google Maps</a>
+  </div>
+  <div class="restaurant">
+    <strong>Parlor Donuts</strong> <em>(Best Donuts!)</em>
+    <div class="address">600 Gulf Shores Pkwy, Gulf Shores, AL 36542 — <a href="tel:2512234812">(251) 223-4812</a></div>
+    <a href="https://parlordoughnuts.com">Order ahead at parlordoughnuts.com</a> — <em>Save time in line and order from their website!</em>
+  </div>
+
+  <h3>Casual Restaurants</h3>
+  <div class="restaurant">
+    <strong>Nonna's Pizza</strong> <em>(NY Style — Best in Gulf Shores!)</em>
+    <div class="address">1209 Gulf Shores Pkwy, Gulf Shores, AL 36542 — <a href="tel:2512234270">(251) 223-4270</a></div>
+    <a href="https://www.google.com/maps/place/nonnas+gulf+shores+al/data=!4m2!3m1!1s0x889a051dd934cbf5:0xfaef00f17f02efcc">View on Google Maps</a>
+  </div>
+  <div class="restaurant">
+    <strong>Coastal Orange Beach</strong> <em>(Right on the Beach!)</em>
+    <div class="address">25722 Perdido Beach Blvd, Orange Beach, AL 36561 — <a href="tel:2512406001">(251) 240-6001</a></div>
+    <a href="https://www.google.com/maps/place/coastal+orange+beach/data=!4m2!3m1!1s0x889a079dc35a9cbf:0x8d0bbe2cb933a4f4">View on Google Maps</a>
+  </div>
+
+  <h3>Upscale Seafood Restaurants</h3>
+  <div class="restaurant">
+    <strong>Zeke's Restaurant</strong> <em>(Try the Cobia!)</em>
+    <div class="address">26619 Perdido Beach Blvd, Orange Beach, AL 36561 — <a href="tel:2512808008">(251) 280-8008</a></div>
+    Reservations: <a href="https://opentable.com">opentable.com</a> &nbsp;|&nbsp;
+    <a href="https://www.google.com/maps/place/zekes+orange+beach/data=!4m2!3m1!1s0x889a07e63463742f:0x65678b08ee72abaf">View on Google Maps</a>
+  </div>
+  <div class="restaurant">
+    <strong>Cobalt the Restaurant</strong> <em>(Get there early — limited parking!)</em>
+    <div class="address">28099 Perdido Beach Blvd, Orange Beach, AL 36561 — <a href="tel:2519235300">(251) 923-5300</a></div>
+    <a href="https://www.google.com/maps/place/cobalt+orange+beach/data=!4m2!3m1!1s0x889a079ce4b392b3:0x7f81751c5c28e3c9">View on Google Maps</a>
+  </div>
+
+  <hr>
+
+  <h2 id="troubleshooting">Troubleshooting</h2>
+
+  <h3>HVAC</h3>
+  <p>If any one of the <strong>5 doors</strong> to the unit are open, the HVAC thermostat will either show a number code or be off altogether. If you cannot get it to turn on, check that all of these are fully closed:</p>
+  <ol>
+    <li>Master Sliding Door</li>
+    <li>Living Room Sliding Door</li>
+    <li>Bedroom 3 Sliding Door to balcony</li>
+    <li>Bedroom 4 Sliding Door to balcony</li>
+    <li>Front Door</li>
+  </ol>
+
+  <h3>Televisions</h3>
+  <p>The living room and master bedroom are set up with both a <strong>Roku streaming stick</strong> and <strong>cable TV</strong>. Every other bedroom, including the bunk room, has Roku sticks. Use the remote in each room to switch inputs on that TV.</p>
+  <p>The two TVs in the bunk beds are set up for <strong>Bluetooth</strong>.</p>
+
+  <h3>Induction Cooktop</h3>
+  <p>The cooktop will only work with:</p>
+  <ol>
+    <li><strong>A pot or pan designed for induction</strong>, or one that is magnetic enough. We have removed pans that do not work — if you purchase one, please verify it is induction-compatible.</li>
+    <li><strong>The pot or pan must be placed on the element</strong> before it will allow you to set a temperature.</li>
+  </ol>
+  <p>The cooktop warms up fast and the surface cools quickly after cooking is done.</p>
+
+</main>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    hamburger.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    hamburger.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar when a nav link is tapped on mobile
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) closeSidebar();
+    });
+  });
+</script>
+</body>
+</html>
