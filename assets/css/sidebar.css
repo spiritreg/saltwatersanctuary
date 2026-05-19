@@ -6,23 +6,41 @@
   top: 0;
   background-color: #f0f0f0;
   padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: 1000;
 }
 
-.sidebar nav ul {
+.sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.sidebar nav ul li {
+.sidebar ul li {
   margin: 10px 0;
 }
 
-.sidebar nav ul li a {
+.sidebar ul li a {
   text-decoration: none;
   color: #333;
+  display: block;
+  padding: 8px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sidebar ul li a:hover {
+  background-color: #e0e0e0;
 }
 
 .content {
   margin-left: 250px;
   padding: 20px;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
