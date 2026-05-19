@@ -1,9 +1,8 @@
-# Welcome to Saltwater Sanctuary
 ### Your Gulf Shores Beach Guide
 
 Welcome to **Colonnades 1403**, your luxurious home away from home in Gulf Shores, Alabama! We are thrilled to host you and hope you enjoy the panoramic views and exceptional amenities of this beachfront condo.
 
-
+---
 
 ## Property Overview
 
@@ -17,7 +16,7 @@ Welcome to **Colonnades 1403**, your luxurious home away from home in Gulf Shore
 
 **Key Highlights:** Floor-to-ceiling windows showcasing the Gulf, a custom bunk room, a gourmet kitchen with stainless steel appliances, and a wet bar featuring a 100 lb. ice maker.
 
-
+---
 
 ## Bedding Configuration
 
@@ -28,7 +27,7 @@ Welcome to **Colonnades 1403**, your luxurious home away from home in Gulf Shore
 | **Guest Bedroom 2** | King | North balcony access, private bathroom |
 | **Guest Bedroom 3** | King | North balcony access, large closet, bathroom |
 
-
+---
 
 ## Arrival & Departure
 
@@ -55,18 +54,13 @@ Please help us prepare for the next guest:
 ## Condo Amenities
 
 1. Kitchen Essentials
-
-The gourmet kitchen is fully stocked with essentials, including a coffee maker (both K-cup and 12-cup), toaster, blender, and crockpot.
-
+  The gourmet kitchen is fully stocked with essentials, including a coffee maker (both K-cup and 12-cup), toaster, blender, and crockpot.
 2. Wet Bar
-
-The wet bar includes a sink and a **100 lb. ice maker** for effortless entertaining.
-
+  The wet bar includes a sink and a **100 lb. ice maker** for effortless entertaining.
 3. Internet / WiFi
+  Complimentary WiFi is provided. **The password is located on the fridge.**
 
-Complimentary WiFi is provided. **The password is located on the fridge.**
-
-<h3>Resort Amenities</h3>
+## Resort Amenities 
 
 As a guest in our low-density complex, you have access to:
 
