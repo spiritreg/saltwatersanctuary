@@ -1,34 +1,3 @@
-theme: jekyll-theme-minimal
-
-# Site Settings
 title: Saltwater Sanctuary
-description: Your site description here
-url: https://bryanbjerke.github.io/saltwatersanctuary
-baseurl: /saltwatersanctuary
-
-# Site Author
-author:
-  name: Bryan Bjerke
-  avatar: /assets/images/bio-photo.jpg
-  bio: 
-  location: 
-  email: 
-  links:
-    - label: GitHub
-      icon: fab fa-fw fa-github
-      url: https://github.com/Bryanbjerke
-
-# Footer
-footer:
-  links:
-    - label: GitHub
-      icon: fab fa-fw fa-github
-      url: https://github.com/Bryanbjerke
-
-# Markdown Processing
-markdown: kramdown
-markdown_ext: md
-
-# Pagination
-paginate: 10
-paginate_path: /page:num/
+description: A Jekyll site for Saltwater Sanctuary
+theme: minima
